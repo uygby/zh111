@@ -50,6 +50,48 @@
 | 阶段五 | 9/13–9/15 | 系统联调、功能测试与界面完善 |
 | 阶段六 | 9/16–9/20 | 文档整理、答辩准备 |
 
+## 项目结构
+
+```
+zh111/
+├── README.md                 # 项目说明与数据来源
+├── requirements.txt          # Python 依赖
+├── 选题说明.md / 方案设计.md / 学习笔记.md
+├── data/
+│   ├── cwru/                 # CWRU 原始 .mat 数据（不入库，脚本可复现下载）
+│   └── processed/            # 特征矩阵（features.csv / feature_matrix.npz）
+├── src/                      # 核心源码模块
+│   ├── config.py             # 全局配置（采样率、窗口参数、类别定义）
+│   ├── data_loader.py        # CWRU 数据加载与文件名解析
+│   ├── preprocessing.py      # 滤波、去趋势、滑动窗口切片、标准化
+│   └── feature_extraction.py # 时域/频域特征提取（20 维）
+├── scripts/
+│   ├── download_cwru.py      # CWRU 数据集下载脚本
+│   ├── build_features.py     # 数据准备：原始数据 -> 特征矩阵
+│   └── verify_features.py    # 特征矩阵回读验证
+├── models/                   # 模型保存目录（阶段三）
+└── tests/                    # 测试目录
+```
+
+## 阶段二进展（8/29 起）
+
+已完成：
+
+1. **环境搭建**：Python 3.13 + numpy / pandas / scipy / scikit-learn / matplotlib
+2. **数据集下载**：CWRU 12k 驱动端数据 10 个文件（正常 + 内圈/滚动体/外圈故障 × 007/014/021 直径，0 HP 工况），`python scripts/download_cwru.py` 可复现
+3. **数据预处理模块**（src/preprocessing.py）：Butterworth 带通滤波、去趋势、滑动窗口切片（1024 点/512 步长）、z-score 标准化
+4. **特征提取模块**（src/feature_extraction.py）：20 维特征 = 12 时域 + 8 频域
+5. **特征数据集**：2605 样本 × 20 特征（B:711 / IR:708 / Normal:475 / OR:711），已保存至 data/processed/
+
+### 特征提取说明
+
+| 类型 | 特征 |
+| --- | --- |
+| 时域（12） | 均值、绝对均值、标准差、方差、RMS、峰峰值、峰值、峭度、偏度、峰值因子、脉冲因子、裕度因子 |
+| 频域（8） | 频谱幅值均值/标准差、频谱质心、频谱RMS、主频幅值/位置、频谱峭度/偏度 |
+
+> 峭度、峰值因子、频谱质心等对轴承故障冲击敏感，是诊断的关键指标。
+
 ## 参考引用
 
 - Smith W A, Randall R B. Rolling element bearing diagnostics using the Case Western Reserve University data: A benchmark study[J]. Mechanical Systems and Signal Processing, 2015, 64-65: 100-131.

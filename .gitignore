@@ -1,0 +1,24 @@
+# ===== 原始数据 =====
+# CWRU 原始 .mat 文件体积较大，不入库
+# 通过 scripts/download_cwru.py 可复现下载
+data/cwru/
+
+# ===== Python 缓存 =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ===== 虚拟环境 =====
+.venv/
+venv/
+env/
+
+# ===== IDE / 系统 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===== 训练产物 =====
+# 模型文件体积较大，按需保留；如需入库可取消注释
+# models/*.pkl
