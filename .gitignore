@@ -1,7 +1,7 @@
-# ===== 原始数据 =====
-# CWRU 原始 .mat 文件体积较大，不入库
-# 通过 scripts/download_cwru.py 可复现下载
-data/cwru/
+# ===== 数据集 =====
+# 数据文件体积较大，且遵循数据规范（公开数据集引用链接、自建数据集开源后引用），不入库
+# 通过 scripts/download_cwru.py 可复现下载原始数据，scripts/build_features.py 可复现特征数据
+data/
 
 # ===== Python 缓存 =====
 __pycache__/
