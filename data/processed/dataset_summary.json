@@ -1,8 +1,8 @@
 {
-  "n_samples": 2605,
+  "n_samples": 6389,
   "n_features": 20,
   "class_B": 711,
-  "class_IR": 708,
-  "class_Normal": 475,
-  "class_OR": 711
+  "class_IR": 2363,
+  "class_Normal": 2366,
+  "class_OR": 949
 }
