@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工业设备轴承故障智能监测与诊断系统</title>
+    <link href="https://cdn.staticfile.org/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="navbar navbar-dark bg-dark px-3">
+        <span class="navbar-brand mb-0 h1">
+            <span class="badge bg-primary me-2">⚙</span>
+            工业设备轴承故障智能监测与诊断系统
+        </span>
+        <span class="text-light small">智造24-2-25 · 张昊 &nbsp;|&nbsp;
+            <span id="model-status" class="badge bg-warning">模型加载中...</span>
+        </span>
+    </nav>
+
+    <div class="container-fluid py-3">
+        <div class="row g-3">
+            <!-- 左：控制面板 -->
+            <div class="col-lg-3 col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">数据选择</div>
+                    <div class="card-body">
+                        <select id="dataset-select" class="form-select mb-2"></select>
+                        <div class="d-grid gap-2">
+                            <button id="btn-load" class="btn btn-primary">加载数据</button>
+                            <button id="btn-diagnose" class="btn btn-success" disabled>故障诊断</button>
+                            <button id="btn-predict" class="btn btn-info text-white" disabled>健康趋势预测</button>
+                        </div>
+                        <div id="load-info" class="mt-2 small text-muted"></div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">健康度</div>
+                    <div class="card-body text-center">
+                        <div id="health-score" class="health-score">--</div>
+                        <div class="small text-muted mt-1">当前设备健康度</div>
+                        <div id="health-msg" class="small mt-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中：可视化图表 -->
+            <div class="col-lg-6 col-md-8">
+                <div class="card mb-3">
+                    <div class="card-header">振动波形（驱动端 DE · 12kHz）</div>
+                    <div class="card-body">
+                        <div id="chart-wave" class="chart-box"></div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">频谱分析</div>
+                    <div class="card-body">
+                        <div id="chart-freq" class="chart-box"></div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">健康退化趋势与预警</div>
+                    <div class="card-body">
+                        <div id="chart-health" class="chart-box"></div>
+                        <div id="predict-info" class="small text-muted mt-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右：诊断结果 -->
+            <div class="col-lg-3 col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">诊断结果</div>
+                    <div class="card-body">
+                        <div id="diag-result" class="text-center py-3 text-muted">
+                            请选择数据后点击「故障诊断」
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">运维建议（知识推理）</div>
+                    <div class="card-body" id="advice-box">
+                        <div class="text-muted small">诊断后将自动生成运维建议...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部：记录 -->
+        <div class="row g-3 mt-1">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">诊断记录</div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm mb-0">
+                            <thead><tr><th>时间</th><th>类型</th><th>置信度</th></tr></thead>
+                            <tbody id="record-body"><tr><td colspan="3" class="text-muted">暂无记录</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">告警记录</div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm mb-0">
+                            <thead><tr><th>时间</th><th>告警类型</th><th>描述</th></tr></thead>
+                            <tbody id="alarm-body"><tr><td colspan="3" class="text-muted">暂无告警</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/echarts.min.js"></script>
+    <script src="https://cdn.staticfile.org/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
