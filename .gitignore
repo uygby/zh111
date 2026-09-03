@@ -30,7 +30,7 @@ Thumbs.db
 # ===== 本地杂项 =====
 attachment
 ppt_work/
-"python bearing_system.py"
+python bearing_system.py
 
 # ===== 训练产物 =====
 # 模型文件体积较大，按需保留；如需入库可取消注释
