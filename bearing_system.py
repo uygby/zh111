@@ -75,16 +75,19 @@ def parse_cwru_filename(filename):
     if m:
         return {"label": "Normal", "label_cn": CLASS_NAMES["Normal"],
                 "diameter": None, "position": None,
-                "load": int(m.group(1)), "sample_id": int(m.group(2))}
-    m = re.match(r"^12k_Drive_End_(IR|B|OR)(\d{3})(?:@(\d+))?_(\d)_(\d+)\.mat$",
+                "load": int(m.group(1)), "sample_id": int(m.group(2)),
+                "sample_rate": 12000, "end": "Drive"}
+    m = re.match(r"^(12k|48k)_(Drive_End|Fan_End)_(IR|B|OR)(\d{3})(?:@(\d+))?_(\d)_(\d+)\.mat$",
                  name, re.IGNORECASE)
     if m:
-        label, diameter, position, load, sample_id = m.groups()
+        sr, end, label, diameter, position, load, sample_id = m.groups()
         label = label.upper()
         return {"label": label, "label_cn": CLASS_NAMES[label],
                 "diameter": diameter,
                 "position": position if label == "OR" else None,
-                "load": int(load), "sample_id": int(sample_id)}
+                "load": int(load), "sample_id": int(sample_id),
+                "sample_rate": 12000 if sr == "12k" else 48000,
+                "end": "Drive" if "Drive" in end else "Fan"}
     raise ValueError(f"无法识别的 CWRU 文件名: {name}")
 
 
