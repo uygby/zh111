@@ -738,4 +738,7 @@ if __name__ == "__main__":
     print(f"数据库: {DB_PATH}")
     print("访问: http://127.0.0.1:5000")
     print("=" * 50)
-    app.run(host="127.0.0.1", port=5000, debug=False)
+    # 云部署（Render）通过 PORT 环境变量指定端口；本地默认 5000
+    _port = int(os.environ.get("PORT", 5000))
+    _host = os.environ.get("HOST", "0.0.0.0" if "PORT" in os.environ else "127.0.0.1")
+    app.run(host=_host, port=_port, debug=False)

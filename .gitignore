@@ -1,7 +1,15 @@
 # ===== 数据集 =====
 # 数据文件体积较大，且遵循数据规范（公开数据集引用链接、自建数据集开源后引用），不入库
 # 通过 scripts/download_cwru.py 可复现下载原始数据，scripts/build_features.py 可复现特征数据
-data/
+data/*
+!data/cwru/
+data/cwru/*
+# 云部署演示用：仅保留少量代表性样本入库（正常/内圈/滚动体/外圈）
+!data/cwru/normal_0_97.mat
+!data/cwru/12k_Drive_End_IR021_0_209.mat
+!data/cwru/12k_Drive_End_IR007_0_105.mat
+!data/cwru/12k_Drive_End_B021_0_222.mat
+!data/cwru/12k_Drive_End_OR021@6_0_234.mat
 
 # ===== Python 缓存 =====
 __pycache__/
@@ -18,6 +26,11 @@ env/
 .idea/
 .DS_Store
 Thumbs.db
+
+# ===== 本地杂项 =====
+attachment
+ppt_work/
+"python bearing_system.py"
 
 # ===== 训练产物 =====
 # 模型文件体积较大，按需保留；如需入库可取消注释
